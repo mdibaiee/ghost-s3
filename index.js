@@ -11,11 +11,13 @@ var AWS = require('aws-sdk');
 var options = {};
 
 function S3Store(config) {
+  console.log('got config:', config);
   options = config || {};
 }
 
 S3Store.prototype.save = function(image) {
     var self = this;
+    console.log('using options', options);
     if (!options) return when.reject('ghost-s3 is not configured');
 
     var targetDir = self.getTargetDir();
