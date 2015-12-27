@@ -11,13 +11,11 @@ var AWS = require('aws-sdk');
 var options = {};
 
 function S3Store(config) {
-  console.log('got config:', config);
   options = config || {};
 }
 
 S3Store.prototype.save = function(image) {
     var self = this;
-    console.log('using options', options);
     if (!options) return when.reject('ghost-s3 is not configured');
 
     var targetDir = self.getTargetDir();
@@ -32,6 +30,8 @@ S3Store.prototype.save = function(image) {
           bucket: options.bucket,
           region: options.region
         });
+
+        console.log(s3);
 
         return nodefn.call(s3.putObject.bind(s3), {
             ACL: 'public-read',
