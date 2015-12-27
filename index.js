@@ -25,12 +25,15 @@ S3Store.prototype.save = function(image) {
     return readFile(image.path)
     .then(function(buffer) {
         var s3 = new AWS.S3({
-          accessKeyId: options.accessKeyId,
-          secretAccessKey: options.secretAccessKey,
+          credentials: {
+            accessKeyId: options.accessKeyId,
+            secretAccessKey: options.secretAccessKey
+          },
           bucket: options.bucket,
           region: options.region
         });
 
+        console.log(options);
         console.log(s3);
 
         return nodefn.call(s3.putObject.bind(s3), {
